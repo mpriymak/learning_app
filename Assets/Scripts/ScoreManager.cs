@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Threading;
+using UnityEditor;
 
 
 public class ScoreManager : Singleton<ScoreManager>
@@ -225,8 +226,6 @@ public class ScoreManager : Singleton<ScoreManager>
 
         DisplayCongratulations();
 
-        DisplayPrize();
-
         DisplayTotalScore();
 
         DisplayTopScores();
@@ -245,9 +244,72 @@ public class ScoreManager : Singleton<ScoreManager>
     }
         
 
-    private void DisplayPrize()
+    private void DisplayPrize(int place)
     {
+//        Debug.Log("TEST1");
 
+        Sprite prize = new Sprite();
+
+        List<Sprite> prizeArray = new List<Sprite>();
+
+        Debug.Log("TEST1");
+
+        Debug.Log("Place: " + place );
+        Debug.Log("ScoreList count: " + ScoreList.Count);
+
+        if (place == 0)
+        {
+            prize = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/first_place.png", typeof(Sprite));
+        }
+        else if (place == 1)
+        {
+            prize = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/second_place.png", typeof(Sprite));
+        }
+        else if (place == 2)
+        {
+            prize = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/third_place.png", typeof(Sprite));
+        }
+        else
+        {
+            if (_totalScore > (0.9 * ScoreList[2]))
+            {
+                prize = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/gold_cup.png", typeof(Sprite));
+
+            }
+            else if (_totalScore > (0.8 * ScoreList[2]))
+            {
+                prize = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/silver_cup.png", typeof(Sprite));
+
+            }
+            else if (_totalScore > (0.7 * ScoreList[2]))
+            {
+                prize = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/bronze_cup.png", typeof(Sprite));
+            }
+            else 
+            {
+                if (_totalScore > (0.5 * ScoreList[2]))
+                {
+                    prizeArray.Add((Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/ribbon1.png", typeof(Sprite)));
+                    prizeArray.Add((Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/ribbon2.png", typeof(Sprite)));
+                    prizeArray.Add((Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/ribbon3.png", typeof(Sprite)));
+                }
+                else
+                {
+                    prizeArray.Add((Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/award1.png", typeof(Sprite)));
+                    prizeArray.Add((Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/award2.png", typeof(Sprite)));
+                    prizeArray.Add((Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/Background/Prizes/award3.png", typeof(Sprite)));
+                }
+
+                prize = prizeArray[Random.Range(0, 3)];
+            }
+        }
+
+        Debug.Log("TEST2");
+
+        GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("Prize").GetComponent<Image>().preserveAspect = true;
+        GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("Prize").GetComponent<Image>().sprite = prize;
+
+        Debug.Log("TEST3");
     }
 
 
@@ -309,13 +371,15 @@ public class ScoreManager : Singleton<ScoreManager>
 
         bool inserted = false;
 
-        int indexOfReplacement;
+        int indexOfReplacement = -1;
 
         if (ScoreList.Count == 0)
         {
             ScoreList.Add((int)_totalScore);
 
             inserted = true;
+
+            indexOfReplacement = 0;
 
 //            Debug.Log("TEST CASE 1");
         }
@@ -348,14 +412,21 @@ public class ScoreManager : Singleton<ScoreManager>
             }
         }
 
+        Debug.Log("Insert status: " + inserted);
+        Debug.Log("Insertion index: " + indexOfReplacement);
+
         if (inserted == false)
         {
             ScoreList.Add((int)_totalScore);
+
+            indexOfReplacement = ScoreList.IndexOf((int)_totalScore);
         }
 
         if (ScoreList.Count > 3)
         {
             ScoreList.Take(3);
+
+            indexOfReplacement = -1;
         }
             
 //        Debug.Log("Final Score List length is: " + ScoreList.Count);
@@ -382,6 +453,8 @@ public class ScoreManager : Singleton<ScoreManager>
 
             GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("Top Score Canvas").GetChild(i).GetComponent<Text>().text = score;
         }
+
+        DisplayPrize(indexOfReplacement);
 
         SaveScores();
     }
@@ -418,7 +491,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public void LoadScores()
     {
-        ResetSavedScores();
+//        ResetSavedScores();
 
         _scoreString = PlayerPrefs.GetString("Scores");
 
