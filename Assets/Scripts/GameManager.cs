@@ -300,24 +300,24 @@ public class GameManager : Singleton<GameManager>
 
     private void AssignLabels()
     {
-        if(_selectedActivity.transform.FindChild("Top Bar")!=null)
+        if(_selectedActivity.transform.Find("Top Bar")!=null)
         {
-            _selectedActivity.transform.FindChild("Top Bar").FindChild("Label").GetComponent<Text>().text = _currentActivityName;
+            _selectedActivity.transform.Find("Top Bar").Find("Label").GetComponent<Text>().text = _currentActivityName;
 
             if(_currentCategoryName != null)
             {
-                _selectedActivity.transform.FindChild("Top Bar").FindChild("Label").GetComponent<Text>().text += (": " + _currentCategoryName);
+                _selectedActivity.transform.Find("Top Bar").Find("Label").GetComponent<Text>().text += (": " + _currentCategoryName);
             }
         }
 
-        if (_selectedActivity.transform.FindChild("Question Counter") != null)
+        if (_selectedActivity.transform.Find("Question Counter") != null)
         {
-            _selectedActivity.transform.FindChild("Question Counter").GetComponent<Text>().text = "Current Question: " + _currentQuestionNumber + "/" + _totalNumberOfQuestions;
+            _selectedActivity.transform.Find("Question Counter").GetComponent<Text>().text = "Current Question: " + _currentQuestionNumber + "/" + _totalNumberOfQuestions;
         }
 
-        if (_selectedActivity.transform.FindChild("Correct Counter") != null)
+        if (_selectedActivity.transform.Find("Correct Counter") != null)
         {
-            _selectedActivity.transform.FindChild("Correct Counter").GetComponent<Text>().text = "Correct: " + _correctAnswerNumber + "/" + _totalNumberOfQuestions;
+            _selectedActivity.transform.Find("Correct Counter").GetComponent<Text>().text = "Correct: " + _correctAnswerNumber + "/" + _totalNumberOfQuestions;
         }
     }
 
@@ -379,18 +379,18 @@ public class GameManager : Singleton<GameManager>
 
     public void DisableCorrectIncorrect()
     {
-        _selectedActivity.transform.FindChild ("Correct").gameObject.SetActive (false);
-        _selectedActivity.transform.FindChild ("Incorrect").gameObject.SetActive (false);
+        _selectedActivity.transform.Find ("Correct").gameObject.SetActive (false);
+        _selectedActivity.transform.Find ("Incorrect").gameObject.SetActive (false);
     }
 
     public void DisableInteractionUntilPronunciationPlayed()
     {
         if(_currentActivityName == "Listen and Guess")
         {
-            _selectedActivity.transform.FindChild("Item 1").GetComponent<Button>().interactable = false;
-            _selectedActivity.transform.FindChild("Item 2").GetComponent<Button>().interactable = false;
-            _selectedActivity.transform.FindChild("Item 3").GetComponent<Button>().interactable = false;
-            _selectedActivity.transform.FindChild("Item 4").GetComponent<Button>().interactable = false;
+            _selectedActivity.transform.Find("Item 1").GetComponent<Button>().interactable = false;
+            _selectedActivity.transform.Find("Item 2").GetComponent<Button>().interactable = false;
+            _selectedActivity.transform.Find("Item 3").GetComponent<Button>().interactable = false;
+            _selectedActivity.transform.Find("Item 4").GetComponent<Button>().interactable = false;
         }
     }
 
@@ -501,7 +501,7 @@ public class GameManager : Singleton<GameManager>
 				{
 					GameObject letterSlot = new GameObject ();
 
-					letterSlot.transform.SetParent (_selectedActivity.transform.FindChild ("Item Spelling").transform);
+					letterSlot.transform.SetParent (_selectedActivity.transform.Find ("Item Spelling").transform);
 
 					letterSlot.AddComponent<LayoutElement> ();
 
@@ -509,11 +509,11 @@ public class GameManager : Singleton<GameManager>
 				} 
 				else 
 				{
-					GameObject letterSlot = Instantiate (slotPrefab, _selectedActivity.transform.FindChild ("Item Spelling").transform);
+					GameObject letterSlot = Instantiate (slotPrefab, _selectedActivity.transform.Find ("Item Spelling").transform);
 
 					letterSlot.GetComponentInChildren<Text> ().text = letter.ToString ();
 
-					letterSlot.transform.FindChild ("Letter").gameObject.SetActive (false);
+					letterSlot.transform.Find ("Letter").gameObject.SetActive (false);
 
 					_tempSlotList.Add(letterSlot);
 				}
@@ -523,7 +523,7 @@ public class GameManager : Singleton<GameManager>
 
 			foreach (char letter in randomLetters) 
 			{
-				GameObject randomLetter = Instantiate (letterPrefab, _selectedActivity.transform.FindChild ("Letters").transform);
+				GameObject randomLetter = Instantiate (letterPrefab, _selectedActivity.transform.Find ("Letters").transform);
 
 				randomLetter.GetComponentInChildren<Text> ().text = letter.ToString ();
 
@@ -534,23 +534,23 @@ public class GameManager : Singleton<GameManager>
 		switch (_status) 
 		{
 			case gameStatus.listenAndGuessActivity:
-				_selectedActivity.transform.FindChild ("Item 1").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [0].Image;
-				_selectedActivity.transform.FindChild ("Item 2").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [1].Image;
-				_selectedActivity.transform.FindChild ("Item 3").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [2].Image;
-				_selectedActivity.transform.FindChild ("Item 4").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [3].Image;
+				_selectedActivity.transform.Find ("Item 1").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [0].Image;
+				_selectedActivity.transform.Find ("Item 2").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [1].Image;
+				_selectedActivity.transform.Find ("Item 3").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [2].Image;
+				_selectedActivity.transform.Find ("Item 4").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [3].Image;
 				break;
 			case gameStatus.lookAndChooseActivity:
-				_selectedActivity.transform.FindChild ("Button 1").gameObject.GetComponentInChildren<Text> ().text = _RandomizedItems [0].Name;
-				_selectedActivity.transform.FindChild ("Button 2").gameObject.GetComponentInChildren<Text> ().text = _RandomizedItems [1].Name;
-				_selectedActivity.transform.FindChild ("Button 3").gameObject.GetComponentInChildren<Text> ().text = _RandomizedItems [2].Name;
-				_selectedActivity.transform.FindChild ("Button 4").gameObject.GetComponentInChildren<Text> ().text = _RandomizedItems [3].Name;
+				_selectedActivity.transform.Find ("Button 1").gameObject.GetComponentInChildren<Text> ().text = _RandomizedItems [0].Name;
+				_selectedActivity.transform.Find ("Button 2").gameObject.GetComponentInChildren<Text> ().text = _RandomizedItems [1].Name;
+				_selectedActivity.transform.Find ("Button 3").gameObject.GetComponentInChildren<Text> ().text = _RandomizedItems [2].Name;
+				_selectedActivity.transform.Find ("Button 4").gameObject.GetComponentInChildren<Text> ().text = _RandomizedItems [3].Name;
 
-				_selectedActivity.transform.FindChild ("Item").gameObject.GetComponent<Image> ().preserveAspect = true;
-				_selectedActivity.transform.FindChild ("Item").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [_targetIndex].Image;
+				_selectedActivity.transform.Find ("Item").gameObject.GetComponent<Image> ().preserveAspect = true;
+				_selectedActivity.transform.Find ("Item").gameObject.GetComponent<Image> ().sprite = _RandomizedItems [_targetIndex].Image;
 				break;
 			case gameStatus.readAndCompleteActivity:
-				_selectedActivity.transform.FindChild ("Item Image").gameObject.GetComponent<Image> ().preserveAspect = true;
-				_selectedActivity.transform.FindChild ("Item Image").gameObject.GetComponent<Image> ().sprite = _TargetItem.Image;
+				_selectedActivity.transform.Find ("Item Image").gameObject.GetComponent<Image> ().preserveAspect = true;
+				_selectedActivity.transform.Find ("Item Image").gameObject.GetComponent<Image> ().sprite = _TargetItem.Image;
 				break;
 		}
 			
@@ -574,10 +574,10 @@ public class GameManager : Singleton<GameManager>
 
         ScoreManager.Instance.StartTimer();
 
-        _selectedActivity.transform.FindChild("Item 1").GetComponent<Button>().interactable = true;
-        _selectedActivity.transform.FindChild("Item 2").GetComponent<Button>().interactable = true;
-        _selectedActivity.transform.FindChild("Item 3").GetComponent<Button>().interactable = true;
-        _selectedActivity.transform.FindChild("Item 4").GetComponent<Button>().interactable = true;
+        _selectedActivity.transform.Find("Item 1").GetComponent<Button>().interactable = true;
+        _selectedActivity.transform.Find("Item 2").GetComponent<Button>().interactable = true;
+        _selectedActivity.transform.Find("Item 3").GetComponent<Button>().interactable = true;
+        _selectedActivity.transform.Find("Item 4").GetComponent<Button>().interactable = true;
 	}
 
 
@@ -605,8 +605,8 @@ public class GameManager : Singleton<GameManager>
     	{
     		SoundManager.Instance.PlayEffect ("correct");
 
-    		_selectedActivity.transform.FindChild ("Correct").gameObject.SetActive (true);
-    		_selectedActivity.transform.FindChild ("Incorrect").gameObject.SetActive (false);
+    		_selectedActivity.transform.Find ("Correct").gameObject.SetActive (true);
+    		_selectedActivity.transform.Find ("Incorrect").gameObject.SetActive (false);
 
     		_correctAnswerNumber += 1;
     	} 
@@ -614,8 +614,8 @@ public class GameManager : Singleton<GameManager>
     	{
     		SoundManager.Instance.PlayEffect ("incorrect");
 
-    		_selectedActivity.transform.FindChild ("Correct").gameObject.SetActive (false);
-    		_selectedActivity.transform.FindChild ("Incorrect").gameObject.SetActive (true);
+    		_selectedActivity.transform.Find ("Correct").gameObject.SetActive (false);
+    		_selectedActivity.transform.Find ("Incorrect").gameObject.SetActive (true);
     	} 
     	else 
     	{

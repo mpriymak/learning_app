@@ -239,8 +239,8 @@ public class ScoreManager : Singleton<ScoreManager>
         float accuracyFillAmount = _modifiedAccuracyScore/_accuracyScoreConstant;
         float timeFillAmount = _modifiedTimeScore/_timeScoreConstant;
 
-        GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("AccuracyImage").FindChild("Filler").GetComponent<Image>().fillAmount = accuracyFillAmount;
-        GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("TimeImage").FindChild("Filler").GetComponent<Image>().fillAmount = timeFillAmount;
+        GameManager.Instance.SelectedActivity.transform.Find("Score").Find("AccuracyImage").Find("Filler").GetComponent<Image>().fillAmount = accuracyFillAmount;
+        GameManager.Instance.SelectedActivity.transform.Find("Score").Find("TimeImage").Find("Filler").GetComponent<Image>().fillAmount = timeFillAmount;
     }
         
 
@@ -306,8 +306,8 @@ public class ScoreManager : Singleton<ScoreManager>
 
         Debug.Log("TEST2");
 
-        GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("Prize").GetComponent<Image>().preserveAspect = true;
-        GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("Prize").GetComponent<Image>().sprite = prize;
+        GameManager.Instance.SelectedActivity.transform.Find("Score").Find("Prize").GetComponent<Image>().preserveAspect = true;
+        GameManager.Instance.SelectedActivity.transform.Find("Score").Find("Prize").GetComponent<Image>().sprite = prize;
 
         Debug.Log("TEST3");
     }
@@ -350,7 +350,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
         Debug.Log(remark);
 
-        GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("CongratulatoryRemark").GetComponent<Text>().text = remark;
+        GameManager.Instance.SelectedActivity.transform.Find("Score").Find("CongratulatoryRemark").GetComponent<Text>().text = remark;
     }
 
 
@@ -360,7 +360,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
         string totalScoreString = "Total Score: " + totalScore.ToString();
 
-        GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("TotalScoreText").GetComponent<Text>().text = totalScoreString;
+        GameManager.Instance.SelectedActivity.transform.Find("Score").Find("TotalScoreText").GetComponent<Text>().text = totalScoreString;
     }
 
 
@@ -451,7 +451,7 @@ public class ScoreManager : Singleton<ScoreManager>
                 
 //            Debug.Log("Text score to insert into Top Scores is: " + score);
 
-            GameManager.Instance.SelectedActivity.transform.FindChild("Score").FindChild("Top Score Canvas").GetChild(i).GetComponent<Text>().text = score;
+            GameManager.Instance.SelectedActivity.transform.Find("Score").Find("Top Score Canvas").GetChild(i).GetComponent<Text>().text = score;
         }
 
         DisplayPrize(indexOfReplacement);

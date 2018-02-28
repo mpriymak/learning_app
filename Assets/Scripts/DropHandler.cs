@@ -79,8 +79,8 @@ public class DropHandler : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
 
 	private void CountLetters()
 	{
-		string slotLetter = this.transform.FindChild ("Letter").GetComponent<Text> ().text;
-		string dropLetter = _eventData.pointerDrag.transform.FindChild ("Letter").GetComponent<Text> ().text;
+		string slotLetter = this.transform.Find ("Letter").GetComponent<Text> ().text;
+		string dropLetter = _eventData.pointerDrag.transform.Find ("Letter").GetComponent<Text> ().text;
 
 		if(_dragScript.originalParent.name == "Letters")
 		{

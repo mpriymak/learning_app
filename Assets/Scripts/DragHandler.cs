@@ -91,7 +91,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 						DropHandler._numberOfCorrectLetters -= 1;
 					}
 
-					originalParent = GameManager.Instance.SelectedActivity.transform.FindChild ("Letters").transform;
+					originalParent = GameManager.Instance.SelectedActivity.transform.Find ("Letters").transform;
 
 					DropHandler._numberOfDroppedLetters -= 1;
 				} 
